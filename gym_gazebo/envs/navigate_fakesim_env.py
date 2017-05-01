@@ -136,8 +136,8 @@ class GazeboErleCopterNavigateEnvFakeSim(gym.Env):
 	def laser_callback(self, laser):
 
 		self.observation = np.asarray(self.laser.ranges)
-		print type(self.laser.ranges)
-		print self.laser.ranges.shape
+		# print type(self.laser.ranges)
+		# print self.laser.ranges.shape
 		self.laser = laser
 		# print self.laser.header #good for debugging ghost mode. check seq dropped by uncommenting
 		self.HAVE_DATA = True
