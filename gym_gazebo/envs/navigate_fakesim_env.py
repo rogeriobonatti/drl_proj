@@ -150,6 +150,7 @@ class GazeboErleCopterNavigateEnvFakeSim(gym.Env):
 		if self.min_laser_scan < self.MIN_LASER_DEFINING_CRASH:
 			self.done = True
 		self.observation = np.array(self.laser.ranges)
+		print self.observation.shape
 
 	def _step(self, action):
 		self.last_time_step_was_called = time.time()
