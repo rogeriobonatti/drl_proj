@@ -57,7 +57,7 @@ class GazeboErleCopterNavigateEnvFakeSim(gym.Env):
 		self.done = False
 
 		### publishers, subscribers, services ###
-		self.laser_subscriber = message_filters.Subscriber('/scan', LaserScan, self.laser_callback)
+		self.laser_subscriber = message_filters.Subscriber('/scan', LaserScan, laser_callback)
 		# self.image_subscriber = message_filters.Subscriber('/camera/rgb/image_raw', Image)
 		self.pose_subscriber = rospy.Subscriber('/dji_sim/odometry', Odometry, self.pose_callback)
 		# self.synchro = message_filters.ApproximateTimeSynchronizer([self.laser_subscriber, self.image_subscriber], 10, 0.05)
@@ -136,8 +136,8 @@ class GazeboErleCopterNavigateEnvFakeSim(gym.Env):
 	def laser_callback(self, laser):
 
 		self.observation = np.asarray(self.laser.ranges)
-		# print type(self.laser.ranges)
-		# print self.laser.ranges.shape
+		print type(self.laser.ranges)
+		print self.laser.ranges.shape
 		self.laser = laser
 		# print self.laser.header #good for debugging ghost mode. check seq dropped by uncommenting
 		self.HAVE_DATA = True
