@@ -139,7 +139,7 @@ class GazeboErleCopterNavigateEnvFakeSim(gym.Env):
 	def synchro_callback(self, laser):
 		# cv_image = CvBridge().imgmsg_to_cv2(image, desired_encoding="passthrough")
 		# self.observation = np.asarray(cv_image)
-		self.observation = np.array(self.laser.ranges)
+		
 		self.laser = laser
 		# print self.laser.header #good for debugging ghost mode. check seq dropped by uncommenting
 		self.HAVE_DATA = True
@@ -149,6 +149,7 @@ class GazeboErleCopterNavigateEnvFakeSim(gym.Env):
 			self.min_laser_scan = 20.0
 		if self.min_laser_scan < self.MIN_LASER_DEFINING_CRASH:
 			self.done = True
+		self.observation = np.array(self.laser.ranges)
 
 	def _step(self, action):
 		self.last_time_step_was_called = time.time()
