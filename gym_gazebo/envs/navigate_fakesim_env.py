@@ -18,6 +18,7 @@ from std_srvs.srv import Empty
 from gazebo_msgs.srv import GetModelState, SetModelState
 from gazebo_msgs.msg import ModelState
 from sensor_msgs.msg import LaserScan
+# from sensor_msgs.msg import Image
 from geometry_msgs.msg import Twist, Point, Pose
 from nav_msgs.msg import Odometry
 import message_filters
@@ -57,11 +58,11 @@ class GazeboErleCopterNavigateEnvFakeSim(gym.Env):
 		self.done = False
 
 		### publishers, subscribers, services ###
-		self.laser_subscriber = message_filters.Subscriber('/scan', LaserScan, laser_callback)
+		self.laser_subscriber = message_filters.Subscriber('/scan', LaserScan)
 		# self.image_subscriber = message_filters.Subscriber('/camera/rgb/image_raw', Image)
 		self.pose_subscriber = rospy.Subscriber('/dji_sim/odometry', Odometry, self.pose_callback)
-		# self.synchro = message_filters.ApproximateTimeSynchronizer([self.laser_subscriber, self.image_subscriber], 10, 0.05)
-		# self.synchro.registerCallback(self.synchro_callback)
+		self.synchro = message_filters.ApproximateTimeSynchronizer([self.laser_subscriber], 10, 0.05)
+		self.synchro.registerCallback(self.synchro_callback)
 
 		self.vel_pub = rospy.Publisher('/dji_sim/target_velocity', Twist, queue_size=1)
 
@@ -133,11 +134,12 @@ class GazeboErleCopterNavigateEnvFakeSim(gym.Env):
 			# experimental : set dji pose here itself. this can cause a bad callback error sometimes. tocheck
 			# self.reset_dji()
 
-	def laser_callback(self, laser):
-
-		self.observation = np.asarray(self.laser.ranges)
-		print type(self.laser.ranges)
-		print self.laser.ranges.shape
+	# where there is an image, let there be a laser message.
+	# into that heaven of learning, let my bot awake  
+	def synchro_callback(self, laser):
+		# cv_image = CvBridge().imgmsg_to_cv2(image, desired_encoding="passthrough")
+		# self.observation = np.asarray(cv_image)
+		self.observation = np.array(self.laser.ranges)
 		self.laser = laser
 		# print self.laser.header #good for debugging ghost mode. check seq dropped by uncommenting
 		self.HAVE_DATA = True
