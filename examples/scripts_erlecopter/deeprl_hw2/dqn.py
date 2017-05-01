@@ -84,6 +84,7 @@ class DQNAgent:
         self.train_freq = train_freq
         self.batch_size = batch_size
         self.train_iter_ctr = 0
+        self.laserSize = 70
 
         self.eval_episode_ctr = 0
         self.preprocessor = preprocessors.PreprocessorSequence()
@@ -143,17 +144,35 @@ class DQNAgent:
           The Q-model.
         """
         # reference for creation of the model https://yilundu.github.io/2016/12/24/Deep-Q-Learning-on-Space-Invaders.html
+        
         model=Sequential()
-        model.add(Convolution2D (32,8,8, subsample = (4,4), input_shape=(84,84,4) ))
+        model.add(Dense(4096,input_shape=(self.laserSize,4),name='fc_act1_finetune'))
+        model.add(BatchNormalization(axis=1))
         model.add(Activation('relu'))
-        model.add(Convolution2D (64,4,4, subsample = (2,2) ))
+        model.add(Dropout(0.5,name='fc_dp1_finetune'))
+        model.add(Dense(4096,name='fc_act2_finetune'))
+        model.add(BatchNormalization(axis=1))
         model.add(Activation('relu'))
-        model.add(Convolution2D (64,3,3, subsample = (1,1) ))
-        model.add(Activation('relu'))
-        model.add(Flatten())
-        model.add(Dense(512))
-        model.add(Activation('relu'))
-        model.add(Dense(self.num_actions)) 
+        model.add(Dropout(0.5,name='fc_dp2_finetune'))
+        model.add(Dense(self.num_actions,name='fc_max_finetune'))
+        model.add(BatchNormalization(axis=1))
+        model.add(Activation('softmax'))
+
+        model.summary()
+
+        # old model
+
+        # model=Sequential()
+        # model.add(Convolution2D (32,8,8, subsample = (4,4), input_shape=(84,84,4) ))
+        # model.add(Activation('relu'))
+        # model.add(Convolution2D (64,4,4, subsample = (2,2) ))
+        # model.add(Activation('relu'))
+        # model.add(Convolution2D (64,3,3, subsample = (1,1) ))
+        # model.add(Activation('relu'))
+        # model.add(Flatten())
+        # model.add(Dense(512))
+        # model.add(Activation('relu'))
+        # model.add(Dense(self.num_actions)) 
 
         return model
 
@@ -204,7 +223,8 @@ class DQNAgent:
         ------
         Q-values for the state(s)
         """ 
-        q_vals = self.q_network.predict(np.swapaxes(state,0,3),batch_size=1)
+        q_vals = self.q_network.predict(np.swapaxes(state,0,2),batch_size=1) #is this number 2 right? 
+        # q_vals = self.q_network.predict(np.swapaxes(state,0,3),batch_size=1)
         return q_vals
 
     def make_log_dir(self):
@@ -268,11 +288,11 @@ class DQNAgent:
         #print type(current_state_samples[0])
 
         # fetch stuff we need from samples 32*84*84*4
-        current_state_images = np.zeros([32, 84, 84, 4])
+        current_state_images = np.zeros([32, self.laserSize, 4])
         for (idx, each_list_of_samples) in enumerate(current_state_samples):
             current_state_images[idx, ...] = np.dstack([sample.state for sample in each_list_of_samples])
 
-        next_state_images = np.zeros([32, 84, 84, 4])
+        next_state_images = np.zeros([32, self.laserSize, 4])
         for (idx, each_list_of_samples) in enumerate(next_state_samples):
             next_state_images[idx, ...] = np.dstack([sample.state for sample in each_list_of_samples])
 

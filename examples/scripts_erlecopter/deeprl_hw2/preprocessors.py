@@ -23,7 +23,8 @@ class HistoryPreprocessor(Preprocessor):
     """
     def __init__(self, history_length=4):
         self.history_length = history_length
-        self.history = np.zeros([history_length, 84, 84, 1], dtype='float32')
+        self.laserSize = 70
+        self.history = np.zeros([history_length, self.laserSize, 1], dtype='float32')
 
     def process_state_for_network(self, state):
         """You only want history when you're deciding the current action to take."""
@@ -35,7 +36,7 @@ class HistoryPreprocessor(Preprocessor):
         """Reset the history sequence.4
         Useful when you start a new episode.
         """
-        self.history = np.zeros([self.history_length, 84, 84, 1], dtype='float32')
+        self.history = np.zeros([self.history_length, self.laserSize, 1], dtype='float32')
 
     def get_config(self):
         return self.history_length
@@ -91,10 +92,13 @@ class AtariPreprocessor(Preprocessor):
         """
         # if not (state.shape == (84,84)):
             # raise ValueError('AtariPreprocessor.process_state_for_memory : input state is not 84*84')
-        state_gray = Image.fromarray(state).convert('L')
-        state_gray = state_gray.resize((110,84)).crop((0, 0, 84, 84)) # section 4.1
+
+        # state_gray = Image.fromarray(state).convert('L')
+        # state_gray = state_gray.resize((110,84)).crop((0, 0, 84, 84)) # section 4.1
+
         #state_gray = state_gray.crop((0,26,84,110)) #crops looking at the bottom of the image, not at the score
-        return np.uint8(np.asarray(state_gray))
+        # return np.uint8(np.asarray(state_gray))
+        return state
 
     def process_state_for_network(self, state):
         """Scale, convert to greyscale and store as float32.
@@ -102,8 +106,9 @@ class AtariPreprocessor(Preprocessor):
         Basically same as process state for memory, but this time
         outputs float32 images.
         """
-        state_gray = self.process_state_for_memory(state)
-        return np.float32(state_gray)/255.
+        # state_gray = self.process_state_for_memory(state)
+        # return np.float32(state_gray)/255.
+        return state
 
     # todo check 
     def process_batch(self, samples):
@@ -113,7 +118,8 @@ class AtariPreprocessor(Preprocessor):
         samples from the replay memory. Meaning you need to convert
         both state and next state values.
         """
-        return np.float32(samples)/255.
+        # return np.float32(samples)/255.
+        return samples
 
     def process_reward(self, reward):
         """Clip reward between -1 and 1."""

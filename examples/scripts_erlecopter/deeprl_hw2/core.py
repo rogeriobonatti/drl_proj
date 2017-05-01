@@ -37,6 +37,7 @@ class Sample:
         self.action = action
         self.reward = reward
         self.is_terminal = is_terminal
+        self.laserSize = 70
 
 class Preprocessor:
     """Preprocessor base class.
