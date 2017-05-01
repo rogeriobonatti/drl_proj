@@ -73,7 +73,7 @@ class DQNAgent:
                  mode,
                  eval_dir = None,
                  resume_dir= None,
-                 log_parent_dir = '/home/vaibhav/madratman/logs/project/dqn'):
+                 log_parent_dir = '/data/datasets/rbonatti/drl/logs'):
 
         self.env_string = env
         self.env = gym.make(env)
