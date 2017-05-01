@@ -4,6 +4,7 @@ import tensorflow as tf
 
 from keras.models import Sequential, Model
 from keras.layers import Dense, Activation, Dropout, Reshape, Flatten, Lambda
+from keras.layers.normalization import BatchNormalization
 from keras.layers.convolutional import Convolution2D, ZeroPadding2D, AveragePooling2D, MaxPooling2D
 from keras.optimizers import Adam
 from keras import backend as K
