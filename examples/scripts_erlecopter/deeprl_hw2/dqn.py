@@ -398,7 +398,7 @@ class DQNAgent:
                 # print "shape {}, max {}, min {}, type {} ".format(state_network.shape, np.max(state_network), np.min(state_network), state_network.dtype)
 
                 # burning in 
-                print self.train_iter_ctr
+                # print self.train_iter_ctr
                 if self.train_iter_ctr < self.num_burn_in:
                     print 'burn'
                     action = random_policy.select_action() # goes from 0 to n-1
@@ -433,7 +433,7 @@ class DQNAgent:
 
                 # training
                 else:
-                    print 'train'
+                    # print 'train'
                     # print "iter_ctr {}, self.train_episode_ctr : {} num_timesteps_in_curr_episode {}".format(self.train_iter_ctr, self.train_episode_ctr, num_timesteps_in_curr_episode)
                     q_values = self.calc_q_values(state_network)
                     # print "q_values {} q_values.shape {}".format(q_values, q_values.shape)
