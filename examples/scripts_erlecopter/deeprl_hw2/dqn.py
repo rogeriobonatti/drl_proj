@@ -147,11 +147,11 @@ class DQNAgent:
         # reference for creation of the model https://yilundu.github.io/2016/12/24/Deep-Q-Learning-on-Space-Invaders.html
         
         model=Sequential()
-        model.add(Dense(4096,input_shape=(self.laserSize,4),name='fc_act1_finetune'))
+        model.add(Dense(500,input_shape=(self.laserSize,4),name='fc_act1_finetune'))
         model.add(BatchNormalization(axis=1))
         model.add(Activation('relu'))
         model.add(Dropout(0.5,name='fc_dp1_finetune'))
-        model.add(Dense(4096,name='fc_act2_finetune'))
+        model.add(Dense(500,name='fc_act2_finetune'))
         model.add(BatchNormalization(axis=1))
         model.add(Activation('relu'))
         model.add(Dropout(0.5,name='fc_dp2_finetune'))
