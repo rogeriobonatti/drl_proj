@@ -81,8 +81,7 @@ class DQNAgent:
         self.num_actions = self.env.action_space.n
         self.gamma = gamma
         self.target_update_freq = target_update_freq
-        # self.num_burn_in = num_burn_in
-        self.num_burn_in = 50
+        self.num_burn_in = num_burn_in 
         self.train_freq = train_freq
         self.batch_size = batch_size
         self.train_iter_ctr = 0
@@ -320,7 +319,7 @@ class DQNAgent:
                     y_targets_all[idx, last_sample.action] = np.float32(last_sample.reward) + self.gamma*q_next[idx, np.argmax(q_current[idx])] 
 
         loss = self.q_network.train_on_batch(current_state_images, np.float32(y_targets_all))
-        print "UPDATTTTTTTTTTTTTTTTTTTED"
+
         # print "loss", loss
         with tf.name_scope('summaries'):
             self.tf_log_scaler(tag='train_loss', value=loss, step=self.train_iter_ctr)
@@ -485,7 +484,6 @@ class DQNAgent:
                         break
 
                     if not(self.train_iter_ctr % self.train_freq):
-                        print 'updateeeeeeeeeeeeeeeeeeeee'
                         # print "update_policy() called"
                         self.update_policy()
                         # print "update_policy() finished"
