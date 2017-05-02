@@ -400,7 +400,6 @@ class DQNAgent:
                 # burning in 
                 # print self.train_iter_ctr
                 if self.train_iter_ctr < self.num_burn_in:
-                    print 'burn'
                     action = random_policy.select_action() # goes from 0 to n-1
                     # print "\ntaking action", action, "\n"
 
