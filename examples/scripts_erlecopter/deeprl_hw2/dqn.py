@@ -81,7 +81,8 @@ class DQNAgent:
         self.num_actions = self.env.action_space.n
         self.gamma = gamma
         self.target_update_freq = target_update_freq
-        self.num_burn_in = num_burn_in
+        # self.num_burn_in = num_burn_in
+        self.num_burn_in = 500
         self.train_freq = train_freq
         self.batch_size = batch_size
         self.train_iter_ctr = 0
