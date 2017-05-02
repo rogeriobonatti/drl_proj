@@ -44,8 +44,10 @@ def main():  # noqa: D103
         from deeprl_hw2.evaluation_table import DQNAgent
     elif args.resume_dir is not None:
         from deeprl_hw2.dqn_resume import DQNAgent
+        print 'RESUME'
     else:
         from deeprl_hw2.dqn import DQNAgent
+        print 'DQN NORMAL'
 
     video_every_nth = 50000
     eval_every_nth = 10000
