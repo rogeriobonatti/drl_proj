@@ -58,11 +58,11 @@ class GazeboErleCopterNavigateEnvFakeSim(gym.Env):
 		self.done = False
 
 		### publishers, subscribers, services ###
-		self.laser_subscriber = message_filters.Subscriber('/scan', LaserScan)
+		self.laser_subscriber = message_filters.Subscriber('/scan', LaserScan, self.laser_callback)
 		# self.image_subscriber = message_filters.Subscriber('/camera/rgb/image_raw', Image)
 		self.pose_subscriber = rospy.Subscriber('/dji_sim/odometry', Odometry, self.pose_callback)
-		self.synchro = message_filters.ApproximateTimeSynchronizer([self.laser_subscriber], 10, 0.05)
-		self.synchro.registerCallback(self.synchro_callback)
+		# self.synchro = message_filters.ApproximateTimeSynchronizer([self.laser_subscriber], 10, 0.05)
+		# self.synchro.registerCallback(self.synchro_callback)
 
 		self.vel_pub = rospy.Publisher('/dji_sim/target_velocity', Twist, queue_size=1)
 
@@ -136,7 +136,7 @@ class GazeboErleCopterNavigateEnvFakeSim(gym.Env):
 
 	# where there is an image, let there be a laser message.
 	# into that heaven of learning, let my bot awake  
-	def synchro_callback(self, laser):
+	def laser_callback(self, laser):
 		# cv_image = CvBridge().imgmsg_to_cv2(image, desired_encoding="passthrough")
 		# self.observation = np.asarray(cv_image)
 		
