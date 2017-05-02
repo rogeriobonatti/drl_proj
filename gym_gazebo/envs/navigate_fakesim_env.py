@@ -33,7 +33,7 @@ class GazeboErleCopterNavigateEnvFakeSim(gym.Env):
 		self.position = Point(self.reset_x, self.reset_y, self.reset_z) # initialize to same coz reset is called before pose callback
 
 		# dem MDP rewards tho
-		self.MIN_LASER_DEFINING_CRASH = 0.75
+		self.MIN_LASER_DEFINING_CRASH = 1.25
 		self.MIN_LASER_DEFINING_NEGATIVE_REWARD = 2.0
 		self.REWARD_AT_LASER_DEFINING_NEGATIVE_REWARD = 0.0
 		self.REWARD_AT_LASER_JUST_BEFORE_CRASH = -5.0
