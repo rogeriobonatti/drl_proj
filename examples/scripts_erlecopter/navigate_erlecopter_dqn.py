@@ -61,13 +61,13 @@ def main():  # noqa: D103
         eval_every_nth = 50000        
 
     if args.resume_dir is not None:
-        agent = DQNAgent(env=args.env, gamma=0.99, target_update_freq=10000, num_burn_in=500, train_freq=4, batch_size=32, mode=args.mode, 
+        agent = DQNAgent(env=args.env, gamma=0.99, target_update_freq=10000, num_burn_in=50, train_freq=4, batch_size=32, mode=args.mode, 
                         resume_dir=args.resume_dir)
     else:
         if args.eval_dir is not None:
-            agent = DQNAgent(env=args.env, gamma=0.99, target_update_freq=10000, num_burn_in=500, train_freq=4, batch_size=32, mode=args.mode, eval_dir=args.eval_dir)
+            agent = DQNAgent(env=args.env, gamma=0.99, target_update_freq=10000, num_burn_in=50, train_freq=4, batch_size=32, mode=args.mode, eval_dir=args.eval_dir)
         else:
-            agent = DQNAgent(env=args.env, gamma=0.99, target_update_freq=10000, num_burn_in=500, train_freq=4, batch_size=32, mode=args.mode)
+            agent = DQNAgent(env=args.env, gamma=0.99, target_update_freq=10000, num_burn_in=50, train_freq=4, batch_size=32, mode=args.mode)
 
     print "args.evaluate", 
 
