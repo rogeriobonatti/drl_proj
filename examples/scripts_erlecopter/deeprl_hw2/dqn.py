@@ -459,6 +459,7 @@ class DQNAgent:
                         # self.q_network.save(os.path.join(self.log_dir, 'weights/q_network_{}.h5'.format(str(self.train_iter_ctr).zfill(7))))
                         # output = open(os.path.join(self.log_dir, 'replay_memory/iter_{}.pkl'.format(str(self.train_iter_ctr).zfill(7))), 'wb')
                         self.q_network.save(os.path.join(self.log_dir, 'q_network.h5'))
+                        print 'TRYING TO SAVE'
                         
                     if not(self.train_iter_ctr%save_replay_mem_every_nth): # this takes a lot of time if big and causes ghost mode
                         output = open(os.path.join(self.log_dir, 'mem.pkl'), 'wb')
