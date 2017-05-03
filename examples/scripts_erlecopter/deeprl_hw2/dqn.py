@@ -371,7 +371,9 @@ class DQNAgent:
         self.tf_summary_writer = tf.summary.FileWriter(self.log_dir, self.tf_session.graph)
 
         while self.train_iter_ctr < num_iterations:
+
             state = self.env.reset()
+            print state.shape
             self.preprocessor.reset_history_memory()
 
             num_timesteps_in_curr_episode = 0
@@ -394,8 +396,8 @@ class DQNAgent:
                 #     print(str(msg))
 
                 # this appends to uint8 history and also returns stuff ready to be spit into the  network
-                print state
-                print state.shape
+                # print state
+                # print state.shape
                 state_network = self.preprocessor.process_state_for_network(state) #shape is (4,84,84,1). axis are swapped in cal_q_vals
                 # print "shape {}, max {}, min {}, type {} ".format(state_network.shape, np.max(state_network), np.min(state_network), state_network.dtype)
 
