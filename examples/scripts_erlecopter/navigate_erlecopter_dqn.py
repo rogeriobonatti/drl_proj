@@ -69,14 +69,14 @@ def main():  # noqa: D103
         if args.eval_dir is not None:
             agent = DQNAgent(env=args.env, gamma=0.99, target_update_freq=10000, num_burn_in=50000, train_freq=4, batch_size=32, mode=args.mode, eval_dir=args.eval_dir)
         else:
-            agent = DQNAgent(env=args.env, gamma=0.99, target_update_freq=10000, num_burn_in=50, train_freq=4, batch_size=32, mode=args.mode)
+            agent = DQNAgent(env=args.env, gamma=0.99, target_update_freq=10000, num_burn_in=5000, train_freq=4, batch_size=32, mode=args.mode)
 
     print "args.evaluate", 
 
     if args.eval_dir is not None:
         agent.evaluate(num_episodes=50, max_episode_length=2500) 
     else:
-        agent.fit(num_iterations = int(5e6), max_episode_length=2500, save_model_every_nth=50, eval_every_nth=eval_every_nth, log_loss_every_nth=1000, video_every_nth=video_every_nth, 
+        agent.fit(num_iterations = int(5e6), max_episode_length=2500, save_model_every_nth=5000, eval_every_nth=eval_every_nth, log_loss_every_nth=1000, video_every_nth=video_every_nth, 
                   save_replay_mem_every_nth=3e6)
         
 
