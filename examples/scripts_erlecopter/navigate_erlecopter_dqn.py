@@ -76,7 +76,7 @@ def main():  # noqa: D103
     if args.eval_dir is not None:
         agent.evaluate(num_episodes=50, max_episode_length=2500) 
     else:
-        agent.fit(num_iterations = int(5e6), max_episode_length=2500, save_model_every_nth=5000, eval_every_nth=eval_every_nth, log_loss_every_nth=1000, video_every_nth=video_every_nth, 
+        agent.fit(num_iterations = int(5e6), max_episode_length=2500, save_model_every_nth=50, eval_every_nth=eval_every_nth, log_loss_every_nth=1000, video_every_nth=video_every_nth, 
                   save_replay_mem_every_nth=3e6)
         
 
